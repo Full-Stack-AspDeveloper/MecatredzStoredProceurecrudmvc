@@ -1,0 +1,138 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Display</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Home/getList",
+                success: function (data) {
+                    var tab = "";
+                    for (i = 0; i < data.length; i++) {
+                        tab = tab + "<tr><td>" + (i + 1) + "</td><td>" + data[i].name + "</td><td>" + data[i].mob + "</td><td>" + data[i].email + "</td><td>" + data[i].dob + "</td><td><span class='fa fa-trash spd' style='color:red; font-size:20px;' ></span></td><td><span class='fa fa-edit spd' style='color:green; font-size:20px;' ></span></td><td><a href='/Home/Index'><span class='fa fa-hand-o-up spd' style='color:blue; font-size:20px;' ></span></a></td></tr>";
+                    }
+                    $("#dd").html(tab);
+                },
+                Error: function () {
+                    alert("Somethin Went Wrong");
+                }
+            });
+
+            // Click Event Of Table
+            $("#myTable").on("click", ".spd", function () {
+
+                //Get Current Row
+                var cRow = $(this).closest("tr");
+                var mm = cRow.find("td:eq(3)").text();
+                //Deleted Record
+                
+                cRow.find("td:eq(5)").click(function () {
+                    
+                    $.getJSON("/Home/deleteRecord", { email: mm }, function (data) {
+                        alert(data);
+                    });
+                });
+                // Updated Record
+                cRow.find("td:eq(6)").click(function () {
+                    $.getJSON("/Home/getSingleRow", { email: mm }, function (data) {
+                        $("#txtname").val(data[0].name);
+                        $("#txtmob").val(data[0].mob);
+                        $("#txtemail").val(data[0].email);
+                        $("#txtdob").val(data[0].dob);
+                        $("#txth").val(data[0].rid);
+                        $("#btnm").trigger("click");
+                    });
+                });
+            });
+            $("#btnu").click(function () {
+                var rid = $("#txth").val();
+                var n = $("#txtname").val();
+                var m = $("#txtmob").val();
+                var e = $("#txtemail").val();
+                var d = $("#txtdob").val();
+
+                // Calling Of Update Method
+                $.getJSON("/Home/UpdateRecord", { rid: rid, n: n, m: m, e: e, d: d }, function (data) {
+                    alert(data);
+                    window.location.href = "/Home/Display";
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnm" style="display:none;">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#5fb5ef;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Update Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+
+                        <div class="col-sm-10" style="border:10px solid blue; padding:15px; border-radius:10px">
+                            <h2 style="background-color:darkgreen; color:white; text-align:center; border-radius:50px">Student Register</h2>
+                           <input type="hidden" id="txth" />
+                            Name :
+                            <input type="text" id="txtname" required class="form-control" />
+                            Mobile No. :
+                            <input type="number" id="txtmob" required class="form-control" />
+                            Email ID :
+                            <input type="email" id="txtemail" required class="form-control" />
+                            DOB :
+                            <input type="date" id="txtdob" required class="form-control" />
+                            <br />
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btnu">Update </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <h2 style="background-color:darkgreen; color:white; text-align:center; border-radius:50px;">Student Register</h2>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="background-color: black; color: yellowgreen; border-radius:15px;">
+                <table class='table table-respensive table-bordered table-hover table-stripped' id="myTable">
+                    <thead><tr><th>Sr.No</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>DOB</th><th>Delete</th><th>Edit</th><th>Add Record</th></tr></thead>
+                    <tbody id="dd">
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+</body>
+</html>

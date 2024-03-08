@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34301.259
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MecatredzStoredProceurecrudmvc", "MecatredzStoredProceurecrudmvc\MecatredzStoredProceurecrudmvc.csproj", "{2AC12FF5-DBB0-45B1-B8E7-23B259A8C720}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AC12FF5-DBB0-45B1-B8E7-23B259A8C720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC12FF5-DBB0-45B1-B8E7-23B259A8C720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC12FF5-DBB0-45B1-B8E7-23B259A8C720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC12FF5-DBB0-45B1-B8E7-23B259A8C720}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3078E1B0-31D1-4B31-9071-C5B4F1154E79}
+	EndGlobalSection
+EndGlobal

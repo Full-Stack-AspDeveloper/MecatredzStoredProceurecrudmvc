@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Crud Application </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#btns").click(function () {
+                var n = $("#txtname").val();
+                var m = $("#txtmob").val();
+                var em = $("#txtemail").val();
+                var db = $("#txtdob").val();
+
+                //Calling ofMethod by using  Ajax 
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/InsertRecord",
+                    data: '&name=' + n + '&mob=' + m + '&email=' + em + '&dob=' + db,
+                    success:function (data) {
+                        alert("Data Successfully Saved");
+                        $("#txtname").val("");
+                        $("#txtmob").val("");
+                        $("#txtemail").val("");
+                        $("#txtdob").val("");
+                    },
+                    error: function() {
+                        alert("Something Went Wrong");
+                    }
+                })
+            })
+        })
+
+    </script>
+
+</head>
+<body>
+<h2>Index</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+
+            <div class="col-sm-4" style="border:10px solid blue; padding:15px; border-radius:10px">
+                <h2 style="background-color:darkgreen; color:white; text-align:center; border-radius:50px">Student Register</h2>
+                Name :
+                <input type="text" id="txtname" required class="form-control" />
+                Mobile No. :
+                <input type="number" id="txtmob" required class="form-control" />
+                Email ID :
+                <input type="email" id="txtemail" required class="form-control" />
+                DOB :
+                <input type="date" id="txtdob" required class="form-control" />
+                <br />
+                <button id="btns" class="btn btn-success">Save Record</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/Home/display" class="btn btn-primary">Show Record</a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</body>
+</html>
